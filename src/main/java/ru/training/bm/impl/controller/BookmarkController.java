@@ -2,23 +2,23 @@ package ru.training.bm.impl.controller;
 
 import org.springframework.web.bind.annotation.*;
 import ru.training.bm.api.controller.BaseController;
-import ru.training.bm.api.dto.BookmarkDTO;
+import ru.training.bm.api.domain.Bookmark;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(ControllerUrls.BOOKMARKS_ROOT)
-public class BookmarkController implements BaseController<BookmarkDTO> {
+public class BookmarkController implements BaseController<Bookmark> {
 
     @Override
     @GetMapping(ControllerUrls.RETRIEVE)
-    public BookmarkDTO retrieve(@PathVariable Long id) {
+    public Bookmark retrieve(@PathVariable Long id) {
         return null;
     }
 
     @Override
     @GetMapping(ControllerUrls.RETRIEVE_ALL)
-    public List<BookmarkDTO> retrieveAll() {
+    public List<Bookmark> retrieveAll() {
         return null;
     }
 
@@ -36,13 +36,13 @@ public class BookmarkController implements BaseController<BookmarkDTO> {
 
     @Override
     @PostMapping(ControllerUrls.CREATE)
-    public BookmarkDTO create(BookmarkDTO val) {
+    public Bookmark create(Bookmark val) {
         return null;
     }
 
     @Override
     @PutMapping(ControllerUrls.UPDATE)
-    public BookmarkDTO update(BookmarkDTO val) {
+    public Bookmark update(Bookmark val) {
         return null;
     }
 

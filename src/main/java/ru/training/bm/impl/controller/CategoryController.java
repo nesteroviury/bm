@@ -2,23 +2,23 @@ package ru.training.bm.impl.controller;
 
 import org.springframework.web.bind.annotation.*;
 import ru.training.bm.api.controller.BaseController;
-import ru.training.bm.api.dto.CategoryDTO;
+import ru.training.bm.api.domain.Category;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(ControllerUrls.CATEGORIES_ROOT)
-public class CategoryController implements BaseController<CategoryDTO> {
+public class CategoryController implements BaseController<Category> {
 
     @Override
     @GetMapping(ControllerUrls.RETRIEVE)
-    public CategoryDTO retrieve(Long id) {
+    public Category retrieve(Long id) {
         return null;
     }
 
     @Override
     @GetMapping(ControllerUrls.RETRIEVE_ALL)
-    public List<CategoryDTO> retrieveAll() {
+    public List<Category> retrieveAll() {
         return null;
     }
 
@@ -36,13 +36,13 @@ public class CategoryController implements BaseController<CategoryDTO> {
 
     @Override
     @PostMapping(ControllerUrls.CREATE)
-    public CategoryDTO create(CategoryDTO val) {
+    public Category create(Category val) {
         return null;
     }
 
     @Override
     @PutMapping(ControllerUrls.UPDATE)
-    public CategoryDTO update(CategoryDTO val) {
+    public Category update(Category val) {
         return null;
     }
 
