@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(schema = "bookmark_manager_schema", name = "CATEGORIES")
+@Table(schema = "bookmark_manager", name = "CATEGORIES")
 public class Category implements Serializable, IHierarchyElement {
     private static final long serialVersionUID = -4759397049790260072L;
 
@@ -33,7 +33,7 @@ public class Category implements Serializable, IHierarchyElement {
             name = "CATEGORIES_SEQ"
             , sequenceName = "CATEGORIES_SEQ"
             , allocationSize = 1
-            , schema = "BOOKMARK_MANAGER_SCHEMA"
+            , schema = "BOOKMARK_MANAGER"
     )
     private Long id;
 

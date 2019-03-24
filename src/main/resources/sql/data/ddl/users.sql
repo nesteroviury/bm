@@ -1,0 +1,3 @@
+CREATE USER root PASSWORD 'root'
+
+ALTER USER root ADMIN TRUE

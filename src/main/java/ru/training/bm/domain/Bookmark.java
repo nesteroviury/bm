@@ -19,7 +19,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
-@Table(schema = "bookmark_manager_schema", name = "BOOKMARKS")
+@Table(schema = "bookmark_manager", name = "BOOKMARKS")
 public class Bookmark implements Serializable {
     private static final long serialVersionUID = 6293892023058834767L;
 
@@ -31,7 +31,7 @@ public class Bookmark implements Serializable {
             name = "BOOKMARKS_SEQ"
             , sequenceName = "BOOKMARKS_SEQ"
             , allocationSize = 1
-            , schema = "BOOKMARK_MANAGER_SCHEMA"
+            , schema = "BOOKMARK_MANAGER"
     )
     private Long id;
 
