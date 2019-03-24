@@ -1,4 +1,4 @@
-package ru.training.bm.api.domain;
+package ru.training.bm.domain;
 
 public interface IHierarchyElement {
     IHierarchyElement getParent();

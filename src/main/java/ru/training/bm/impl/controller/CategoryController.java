@@ -2,7 +2,7 @@ package ru.training.bm.impl.controller;
 
 import org.springframework.web.bind.annotation.*;
 import ru.training.bm.api.controller.BaseController;
-import ru.training.bm.api.domain.Category;
+import ru.training.bm.domain.Category;
 
 import java.util.List;
 

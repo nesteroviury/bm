@@ -1,6 +1,20 @@
-package ru.training.bm.api.domain;
+package ru.training.bm.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GenerationType;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Column;
+import javax.persistence.Basic;
+import javax.persistence.FetchType;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.Version;
+import javax.persistence.Transient;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 
