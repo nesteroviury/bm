@@ -1,5 +1,7 @@
 package ru.training.bm.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -52,6 +54,7 @@ public class Bookmark implements Serializable {
     @Column(name = "CREATE_DATE")
     private Timestamp createDate;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CATEGORY_ID")
     private Category category;

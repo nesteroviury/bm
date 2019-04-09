@@ -1,10 +1,9 @@
 package ru.training.bm.impl.controller;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import ru.training.bm.api.controller.BaseController;
 import ru.training.bm.domain.Category;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(ControllerUrls.CATEGORIES_ROOT)
@@ -13,12 +12,6 @@ public class CategoryController implements BaseController<Category> {
     @Override
     @GetMapping(ControllerUrls.RETRIEVE)
     public Category retrieve(Long id) {
-        return null;
-    }
-
-    @Override
-    @GetMapping(ControllerUrls.RETRIEVE_ALL)
-    public List<Category> retrieveAll() {
         return null;
     }
 
@@ -43,6 +36,11 @@ public class CategoryController implements BaseController<Category> {
     @Override
     @PutMapping(ControllerUrls.UPDATE)
     public Category update(Category val) {
+        return null;
+    }
+
+    @Override
+    public Page<Category> retrieveAll(Integer page, Integer size) {
         return null;
     }
 
