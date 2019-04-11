@@ -6,9 +6,10 @@ import org.springframework.web.bind.annotation.*;
 import ru.training.bm.api.controller.BaseController;
 import ru.training.bm.api.service.BookmarkService;
 import ru.training.bm.domain.Bookmark;
+import ru.training.bm.dto.IdWrapper;
 
 @RestController
-@RequestMapping(ControllerUrls.BOOKMARKS_ROOT)
+@RequestMapping(ControllerUrls.ROOT)
 public class BookmarkController implements BaseController<Bookmark> {
 
     private final BookmarkService bookmarkService;
@@ -19,39 +20,45 @@ public class BookmarkController implements BaseController<Bookmark> {
     }
 
     @Override
-    @GetMapping(ControllerUrls.RETRIEVE)
-    public Bookmark retrieve(@PathVariable Long id) {
-        return bookmarkService.findById(id);
+    @GetMapping(ControllerUrls.BOOKMARK_GET)
+    public Bookmark get(@PathVariable Long id) {
+        return bookmarkService.get(id);
     }
 
     @Override
-    @GetMapping(ControllerUrls.RETRIEVE_ALL)
-    public Page<Bookmark> retrieveAll(Integer page, Integer size) {
-        return bookmarkService.findAll(page, size);
+    @GetMapping(ControllerUrls.BOOKMARK_GET_ALL)
+    public Page<Bookmark> get(Integer page, Integer size) {
+        return bookmarkService.get(page, size);
     }
 
     @Override
-    @DeleteMapping(ControllerUrls.DELETE)
-    public void delete(Long id) {
-
+    @DeleteMapping(ControllerUrls.BOOKMARK_DELETE)
+    public void delete(Bookmark bookmark) {
+        bookmarkService.delete(bookmark);
     }
 
     @Override
-    @DeleteMapping(ControllerUrls.DELETE_ALL)
-    public void deleteAll() {
-
+    @DeleteMapping(ControllerUrls.BOOKMARK_DELETE_ALL)
+    public void delete(Long categoryId) {
+        bookmarkService.delete(categoryId);
     }
 
     @Override
-    @PostMapping(ControllerUrls.CREATE)
-    public Bookmark create(Bookmark val) {
-        return null;
+    @DeleteMapping(ControllerUrls.BOOKMARK_DELETE_SELECTED)
+    public void delete(IdWrapper wrapper) {
+        bookmarkService.delete(wrapper.getIds());
     }
 
     @Override
-    @PutMapping(ControllerUrls.UPDATE)
-    public Bookmark update(Bookmark val) {
-        return null;
+    @PostMapping(ControllerUrls.BOOKMARK_CREATE)
+    public Bookmark create(Bookmark bookmark) {
+        return bookmarkService.create(bookmark);
+    }
+
+    @Override
+    @PutMapping(ControllerUrls.BOOKMARK_UPDATE)
+    public Bookmark update(Bookmark bookmark) {
+        return bookmarkService.update(bookmark);
     }
 
 }

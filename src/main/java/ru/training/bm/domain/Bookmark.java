@@ -1,6 +1,7 @@
 package ru.training.bm.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -51,7 +52,8 @@ public class Bookmark implements Serializable {
     @Column(name = "ICON")
     private byte[] icon;
 
-    @Column(name = "CREATE_DATE")
+    @CreationTimestamp
+    @Column(name = "CREATE_DATE", updatable = false)
     private Timestamp createDate;
 
     @JsonIgnore
@@ -67,7 +69,6 @@ public class Bookmark implements Serializable {
     private Long categoryId;
 
     public Bookmark() {
-        this.createDate = new Timestamp(System.currentTimeMillis());
     }
 
     public Bookmark(String name, String url) {

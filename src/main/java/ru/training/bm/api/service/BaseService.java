@@ -7,18 +7,18 @@ import java.util.List;
 
 public interface BaseService<T> {
 
-    void add(T t) throws ServiceException;
+    T create(T entity) throws ServiceException;
 
-    void update(T t) throws ServiceException;
+    T update(T entity) throws ServiceException;
 
-    void delete(Long id) throws ServiceException;
+    void delete(T entity) throws ServiceException;
 
-    List<T> list() throws ServiceException;
+    T get(Long id) throws ServiceException;
 
-    T findById(Long id) throws ServiceException;
+    Page<T> get(Integer page, Integer size) throws ServiceException;
 
-    Page<T> findAll(Integer page, Integer size) throws ServiceException;
+    void delete(Long categoryId) throws ServiceException;
 
-    void deleteAll(Long categoryId) throws ServiceException;
+    void delete(List<Long> entityIdList) throws ServiceException;
 
 }
