@@ -9,6 +9,6 @@ import java.util.List;
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
     void deleteAllByCategory(Category category);
-    void deleteAllByIdIn(List<Long> bookmarkIdList);
+    void deleteAllByIdIn(List<Long> ids);
 
 }

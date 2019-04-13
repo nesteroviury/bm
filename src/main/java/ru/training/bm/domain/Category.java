@@ -1,5 +1,8 @@
 package ru.training.bm.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,6 +21,7 @@ import javax.persistence.CascadeType;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -43,6 +47,7 @@ public class Category implements Serializable, IHierarchyElement {
     @Column(name = "DESCRIPTION", length = 300)
     private String description;
 
+    @CreationTimestamp
     @Column(name = "CREATE_DATE")
     private Timestamp createDate;
 
@@ -53,6 +58,7 @@ public class Category implements Serializable, IHierarchyElement {
     @Column(name = "LEVEL", nullable = false)
     private Short level;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TOP_ID")
     private Category top;
@@ -60,6 +66,7 @@ public class Category implements Serializable, IHierarchyElement {
     @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
     private Set<Bookmark> bookmarks;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
     private Category parent;
@@ -67,11 +74,17 @@ public class Category implements Serializable, IHierarchyElement {
     @Transient
     private Long parentId;
 
+    @Transient
+    private Long topId;
+
+    @Transient
+    private List<Long> subCategoryIds;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Category> subCategories;
 
     public Category() {
-        this.createDate = new Timestamp(System.currentTimeMillis());
         this.bookmarks = new HashSet<>();
         this.level = 0;
         this.subCategories = new HashSet<>();
@@ -197,22 +210,20 @@ public class Category implements Serializable, IHierarchyElement {
         this.subCategories.clear();
     }
 
-
-    //todo: normal toString, equals and hashCode
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("Category{");
-        sb.append("id=").append(id);
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", description='").append(description).append('\'');
-        sb.append(", createDate=").append(createDate);
-        sb.append(", version=").append(version);
-        sb.append(", level=").append(level);
-//        sb.append(", top=").append(top.getId());
-//        sb.append(", bookmarks=").append(bookmarks.size());
-//        sb.append(", parent=").append(parent.id);
-        sb.append(", parentId=").append(parentId);
-        sb.append('}');
-        return sb.toString();
+    public Long getTopId() {
+        return topId;
     }
+
+    public void setTopId(Long topId) {
+        this.topId = topId;
+    }
+
+    public List<Long> getSubCategoryIds() {
+        return subCategoryIds;
+    }
+
+    public void setSubCategoryIds(List<Long> subCategoryIds) {
+        this.subCategoryIds = subCategoryIds;
+    }
+
 }

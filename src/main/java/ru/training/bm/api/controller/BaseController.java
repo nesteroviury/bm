@@ -1,24 +1,22 @@
 package ru.training.bm.api.controller;
 
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import ru.training.bm.dto.IdWrapper;
 
 public interface BaseController<T> {
 
-    T get(@PathVariable Long id);
+    T get(Long id);
 
-    void delete(@RequestBody T entity);
+    void delete(T entity);
 
-    void delete(@PathVariable Long categoryId);
+    void delete(Long categoryId);
 
-    void delete(@RequestBody IdWrapper wrapper);
+    void delete(IdWrapper wrapper);
 
-    T create(@RequestBody T entity);
+    T create(T entity);
 
-    T update(@RequestBody T entity, @PathVariable Long id);
+    T update(T entity, Long id);
 
-    Page<T> get(@PathVariable Integer page, @PathVariable Integer size);
+    Page<T> get(Integer page, Integer size);
 
 }
