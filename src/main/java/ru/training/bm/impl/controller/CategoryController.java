@@ -42,7 +42,7 @@ public class CategoryController implements BaseController<Category> {
 
     @Override
     @PutMapping(ControllerUrls.CATEGORY_UPDATE)
-    public Category update(Category val) {
+    public Category update(Category category, Long id) {
         return null;
     }
 

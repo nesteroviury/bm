@@ -26,7 +26,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category update(Category category) throws ServiceException {
+    public Category update(Category category, Long id) throws ServiceException {
 
         return null;
     }

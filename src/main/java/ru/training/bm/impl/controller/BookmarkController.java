@@ -57,8 +57,8 @@ public class BookmarkController implements BaseController<Bookmark> {
 
     @Override
     @PutMapping(ControllerUrls.BOOKMARK_UPDATE)
-    public Bookmark update(Bookmark bookmark) {
-        return bookmarkService.update(bookmark);
+    public Bookmark update(Bookmark bookmark, Long id) {
+        return bookmarkService.update(bookmark, id);
     }
 
 }

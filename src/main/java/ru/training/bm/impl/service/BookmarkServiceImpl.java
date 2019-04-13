@@ -37,12 +37,16 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Override
     @Transactional
-    public Bookmark update(Bookmark bookmark) throws ServiceException {
-        Bookmark persistentBookmark = get(bookmark.getId());
-        BeanUtils.copyProperties(bookmark, persistentBookmark);
-        bookmarkRepository.saveAndFlush(persistentBookmark);
-
-        return bookmark;
+    public Bookmark update(Bookmark bookmark, Long id) throws ServiceException {
+        return bookmarkRepository
+                .findById(id)
+                .map(persistentBookmark -> {
+                    BeanUtils.copyProperties(bookmark, persistentBookmark);
+                    return bookmarkRepository.saveAndFlush(persistentBookmark);
+                }).orElseGet(() -> {
+                    bookmark.setId(id);
+                    return bookmarkRepository.saveAndFlush(bookmark);
+                });
     }
 
     @Override

@@ -17,7 +17,7 @@ public interface BaseController<T> {
 
     T create(@RequestBody T entity);
 
-    T update(@PathVariable("id") T entity);
+    T update(@RequestBody T entity, @PathVariable Long id);
 
     Page<T> get(@PathVariable Integer page, @PathVariable Integer size);
 

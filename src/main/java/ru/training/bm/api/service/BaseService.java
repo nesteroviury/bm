@@ -9,7 +9,7 @@ public interface BaseService<T> {
 
     T create(T entity) throws ServiceException;
 
-    T update(T entity) throws ServiceException;
+    T update(T entity, Long id) throws ServiceException;
 
     void delete(T entity) throws ServiceException;
 
