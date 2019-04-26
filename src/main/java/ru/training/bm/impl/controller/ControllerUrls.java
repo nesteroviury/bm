@@ -17,7 +17,6 @@ public class ControllerUrls {
     public static final String CATEGORY_GET_ALL = "/management/categories/{page}/{size}";
     public static final String CATEGORY_UPDATE = "/management/category/{id}";
     public static final String CATEGORY_DELETE = "/management/category/{id}";
-    public static final String CATEGORY_DELETE_FAKE = "/management/category/fake";
     public static final String CATEGORY_DELETE_SELECTED = "/management/categories";
 
 }

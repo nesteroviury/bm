@@ -63,7 +63,7 @@ public class Category implements Serializable, IHierarchyElement {
     @JoinColumn(name = "TOP_ID")
     private Category top;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Bookmark> bookmarks;
 
     @JsonIgnore
@@ -210,6 +210,10 @@ public class Category implements Serializable, IHierarchyElement {
         this.subCategories.clear();
     }
 
+    public void clearBookmarks(){
+        this.bookmarks.clear();
+    }
+
     public Long getTopId() {
         return topId;
     }
@@ -224,6 +228,18 @@ public class Category implements Serializable, IHierarchyElement {
 
     public void setSubCategoryIds(List<Long> subCategoryIds) {
         this.subCategoryIds = subCategoryIds;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", level=" + level +
+                ", top=" + top +
+                ", parentId=" + parentId +
+                ", topId=" + topId +
+                '}';
     }
 
 }

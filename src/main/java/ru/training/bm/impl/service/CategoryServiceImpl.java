@@ -1,5 +1,6 @@
 package ru.training.bm.impl.service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,14 +28,27 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public Category create(Category category) throws ServiceException {
+        Optional<Long> parentIdOptional = Optional.ofNullable(category.getParentId());
+        Optional<Long> topIdOptional = Optional.ofNullable(category.getTopId());
+
+        parentIdOptional.ifPresent(id -> category.setParent(this.get(id)));
+        topIdOptional.ifPresent(id -> category.setTop(this.get(id)));
+
         return categoryRepository.saveAndFlush(category);
     }
 
     @Override
     @Transactional
     public Category update(Category category, Long id) throws ServiceException {
-
-        return null;
+        return categoryRepository
+                .findById(id)
+                .map(persistentCategory -> {
+                    BeanUtils.copyProperties(category, persistentCategory, "bookmarks, subCategories");
+                    return categoryRepository.saveAndFlush(persistentCategory);
+                }).orElseGet(() -> {
+                    category.setId(id);
+                    return categoryRepository.saveAndFlush(category);
+                });
     }
 
     @Override
@@ -82,7 +96,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public void delete(Long categoryId) throws ServiceException {
-
+        categoryRepository.deleteById(categoryId);
     }
 
 }

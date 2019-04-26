@@ -25,16 +25,11 @@ public class CategoryController implements BaseController<Category> {
         return categoryService.get(id);
     }
 
+
     @Override
     @DeleteMapping(ControllerUrls.CATEGORY_DELETE)
-    public void delete(@RequestBody Category entity) {
-
-    }
-
-    @Override
-    @DeleteMapping(ControllerUrls.CATEGORY_DELETE_FAKE)
     public void delete(@PathVariable Long id) {
-
+        categoryService.delete(id);
     }
 
     @Override
@@ -52,7 +47,7 @@ public class CategoryController implements BaseController<Category> {
     @Override
     @PutMapping(ControllerUrls.CATEGORY_UPDATE)
     public Category update(@RequestBody Category category, @PathVariable Long id) {
-        return null;
+        return categoryService.update(category, id);
     }
 
     @Override

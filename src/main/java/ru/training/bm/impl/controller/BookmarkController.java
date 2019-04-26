@@ -32,12 +32,6 @@ public class BookmarkController implements BaseController<Bookmark> {
     }
 
     @Override
-    @DeleteMapping(ControllerUrls.BOOKMARK_DELETE)
-    public void delete(Bookmark bookmark) {
-        bookmarkService.delete(bookmark);
-    }
-
-    @Override
     @DeleteMapping(ControllerUrls.BOOKMARK_DELETE_ALL)
     public void delete(Long categoryId) {
         bookmarkService.delete(categoryId);

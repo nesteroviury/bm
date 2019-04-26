@@ -7,9 +7,7 @@ public interface BaseController<T> {
 
     T get(Long id);
 
-    void delete(T entity);
-
-    void delete(Long categoryId);
+    void delete(Long id);
 
     void delete(IdWrapper wrapper);
 
