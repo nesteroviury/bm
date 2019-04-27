@@ -83,4 +83,9 @@ public class BookmarkServiceImpl implements BookmarkService {
         bookmarkRepository.deleteAllByIdIn(bookmarkIdList);
     }
 
+    @Override
+    public void truncate() throws ServiceException {
+        bookmarkRepository.deleteAllInBatch();
+    }
+
 }

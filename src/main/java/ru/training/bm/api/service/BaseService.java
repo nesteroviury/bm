@@ -21,4 +21,6 @@ public interface BaseService<T> {
 
     void delete(List<Long> entityIdList) throws ServiceException;
 
+    void truncate() throws ServiceException;
+
 }

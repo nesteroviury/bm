@@ -67,7 +67,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public void delete(List<Long> entityIdList) throws ServiceException {
+        categoryRepository.deleteAllByIdIn(entityIdList);
+    }
 
+    @Override
+    public void truncate() throws ServiceException {
+        categoryRepository.deleteAllInBatch();
     }
 
     @Override

@@ -40,7 +40,11 @@ public class BookmarkController implements BaseController<Bookmark> {
     @Override
     @DeleteMapping(ControllerUrls.BOOKMARK_DELETE_SELECTED)
     public void delete(IdWrapper wrapper) {
-        bookmarkService.delete(wrapper.getIds());
+        if(wrapper.getTruncate()){
+            bookmarkService.truncate();
+        }else{
+            bookmarkService.delete(wrapper.getIds());
+        }
     }
 
     @Override

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import ru.training.bm.api.controller.BaseController;
 import ru.training.bm.api.json.View;
+import ru.training.bm.api.service.BookmarkService;
 import ru.training.bm.api.service.CategoryService;
 import ru.training.bm.domain.Category;
 import ru.training.bm.dto.IdWrapper;
@@ -15,10 +16,12 @@ import ru.training.bm.dto.IdWrapper;
 public class CategoryController implements BaseController<Category> {
 
     private final CategoryService categoryService;
+    private final BookmarkService bookmarkService;
 
     @Autowired
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(CategoryService categoryService, BookmarkService bookmarkService) {
         this.categoryService = categoryService;
+        this.bookmarkService = bookmarkService;
     }
 
     @JsonView(View.UI.class)
@@ -38,7 +41,12 @@ public class CategoryController implements BaseController<Category> {
     @Override
     @DeleteMapping(ControllerUrls.CATEGORY_DELETE_SELECTED)
     public void delete(@RequestBody IdWrapper wrapper) {
-
+        if(wrapper.getTruncate()){
+            bookmarkService.truncate();
+            categoryService.truncate();
+        }else{
+            categoryService.delete(wrapper.getIds());
+        }
     }
 
     @JsonView(View.UI.class)
