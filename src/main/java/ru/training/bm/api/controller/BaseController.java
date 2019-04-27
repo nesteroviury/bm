@@ -13,7 +13,7 @@ public interface BaseController<T> {
 
     T create(T entity);
 
-    T update(T entity, Long id);
+    T update(T entity);
 
     Page<T> get(Integer page, Integer size);
 

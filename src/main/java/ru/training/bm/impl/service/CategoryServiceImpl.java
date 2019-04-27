@@ -29,26 +29,33 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public Category create(Category category) throws ServiceException {
         Optional<Long> parentIdOptional = Optional.ofNullable(category.getParentId());
-        Optional<Long> topIdOptional = Optional.ofNullable(category.getTopId());
 
-        parentIdOptional.ifPresent(id -> category.setParent(this.get(id)));
-        topIdOptional.ifPresent(id -> category.setTop(this.get(id)));
+        parentIdOptional.ifPresent(id -> {
+            Category parent = this.get(id);
+            category.setParent(parent);
+            category.setTop(parent.getTop());
+        });
 
         return categoryRepository.saveAndFlush(category);
     }
 
     @Override
     @Transactional
-    public Category update(Category category, Long id) throws ServiceException {
+    public Category update(Category category) throws ServiceException {
         return categoryRepository
-                .findById(id)
+                .findById(category.getId())
                 .map(persistentCategory -> {
-                    BeanUtils.copyProperties(category, persistentCategory, "bookmarks, subCategories");
+                    Category parent = this.get(category.getParentId());
+
+                    persistentCategory.setParent(parent);
+                    persistentCategory.setName(category.getName());
+                    persistentCategory.setDescription(category.getDescription());
+                    persistentCategory.setTop(parent.getTop());
+                    persistentCategory.setParentId(category.getParentId());
+
                     return categoryRepository.saveAndFlush(persistentCategory);
-                }).orElseGet(() -> {
-                    category.setId(id);
-                    return categoryRepository.saveAndFlush(category);
-                });
+                })
+                .get();
     }
 
     @Override

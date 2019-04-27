@@ -1,7 +1,9 @@
 package ru.training.bm.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.CreationTimestamp;
+import ru.training.bm.api.json.View;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,6 +31,7 @@ import java.util.Set;
 public class Category implements Serializable, IHierarchyElement {
     private static final long serialVersionUID = -4759397049790260072L;
 
+    @JsonView(View.UI.class)
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE
             , generator = "CATEGORIES_SEQ"
@@ -41,12 +44,15 @@ public class Category implements Serializable, IHierarchyElement {
     )
     private Long id;
 
+    @JsonView(View.UI.class)
     @Column(name = "NAME", length = 50)
     private String name;
 
+    @JsonView(View.UI.class)
     @Column(name = "DESCRIPTION", length = 300)
     private String description;
 
+    @JsonView(View.UI.class)
     @CreationTimestamp
     @Column(name = "CREATE_DATE")
     private Timestamp createDate;
@@ -71,6 +77,7 @@ public class Category implements Serializable, IHierarchyElement {
     @JoinColumn(name = "PARENT_ID")
     private Category parent;
 
+    @JsonView(View.UI.class)
     @Transient
     private Long parentId;
 
