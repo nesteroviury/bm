@@ -1,4 +1,4 @@
-package ru.training.bm.impl.config.property;
+package ru.training.bm.api.config.property;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,12 +9,10 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "connection")
 public class LogDbConnectionProps {
 
-    String url;
-    String username;
-    String password;
-    String driverClassName;
-    String jndiName;
-
-
+    private String url;
+    private String username;
+    private String password;
+    private String driverClassName;
+    private String jndiName;
 
 }
