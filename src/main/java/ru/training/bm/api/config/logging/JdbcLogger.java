@@ -12,8 +12,8 @@ import org.apache.logging.log4j.core.config.AppenderRef;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import ru.training.bm.api.config.property.LogDbConnectionProps;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -24,22 +24,20 @@ import java.sql.SQLException;
 public class JdbcLogger {
 
     private final DataSource dataSource;
-    private final LogDbConnectionProps logDbConnectionProps;
 
     @Autowired
-    public JdbcLogger(DataSource dataSource, LogDbConnectionProps logDbConnectionProps) {
+    public JdbcLogger(@Qualifier("logDataSource") DataSource dataSource) {
         this.dataSource = dataSource;
-        this.logDbConnectionProps = logDbConnectionProps;
     }
 
     @PostConstruct
-    private void init(){
+    private void init() {
 
         System.out.println("####### JDBCLog init() ########");
         final LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
         final Configuration config = ctx.getConfiguration();
 
-        ColumnConfig[] columnConfigs = new ColumnConfig[] {
+        ColumnConfig[] columnConfigs = new ColumnConfig[]{
                 ColumnConfig.newBuilder()
                         .setName("LEVEL")
                         .setPattern("%level")
@@ -96,8 +94,8 @@ public class JdbcLogger {
         // @param level The Level to filter against.
         // @param filter The filter(s) to use.
         // @return The name of the Appender.
-        AppenderRef ref= AppenderRef.createAppenderRef("JDBC_Appender", null, null);
-        AppenderRef[] refs = new AppenderRef[] {ref};
+        AppenderRef ref = AppenderRef.createAppenderRef("JDBC_Appender", null, null);
+        AppenderRef[] refs = new AppenderRef[]{ref};
 
         /*
          * Factory method to create a LoggerConfig.

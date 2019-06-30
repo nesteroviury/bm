@@ -6,7 +6,7 @@ package ru.training.bm.api.json;
 public class View {
 
     /**
-     * Used to change base category data: name, description, parentId
+     * Used to change data category data: name, description, parentId
      */
     public static class UI {}
 

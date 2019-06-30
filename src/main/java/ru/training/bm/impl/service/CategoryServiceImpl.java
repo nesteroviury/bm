@@ -1,6 +1,5 @@
 package ru.training.bm.impl.service;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.training.bm.api.service.CategoryService;
 import ru.training.bm.domain.Category;
 import ru.training.bm.exception.ServiceException;
-import ru.training.bm.repository.CategoryRepository;
+import ru.training.bm.repository.data.CategoryRepository;
 
 import java.util.List;
 import java.util.Optional;

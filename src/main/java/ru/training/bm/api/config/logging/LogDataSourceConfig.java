@@ -1,98 +1,62 @@
 package ru.training.bm.api.config.logging;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import ru.training.bm.api.config.property.LogDbConnectionProps;
+import ru.training.bm.api.config.property.LogDataSourceProperties;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
+@EnableJpaRepositories(
+        entityManagerFactoryRef = "logEntityManagerFactory",
+        transactionManagerRef = "logTransactionManager",
+        basePackages = {"ru.training.bm.repository.logging"}
+)
 public class LogDataSourceConfig {
 
-    private final LogDbConnectionProps logDbConnectionProps;
+    private final LogDataSourceProperties logDataSourceProperties;
 
     @Autowired
-    public LogDataSourceConfig(LogDbConnectionProps logDbConnectionProps) {
-        this.logDbConnectionProps = logDbConnectionProps;
+    public LogDataSourceConfig(LogDataSourceProperties logDataSourceProperties) {
+        this.logDataSourceProperties = logDataSourceProperties;
     }
 
-//logging jndi data source
-/*
-    @Bean
-    public TomcatServletWebServerFactory tomcatFactory() {
-        return new TomcatServletWebServerFactory() {
-            @Override
-            protected TomcatWebServer getTomcatWebServer(Tomcat tomcat) {
-                tomcat.enableNaming();
-
-                return super.getTomcatWebServer(tomcat);
-            }
-
-            @Override
-            protected void postProcessContext(Context context) {
-                ContextResource resource = new ContextResource();
-
-                resource.setName(logDbConnectionProps.getJndiName());
-                resource.setType(DataSource.class.getName());
-                resource.setProperty("driverClassName", logDbConnectionProps.getDriverClassName());
-                resource.setProperty("username", logDbConnectionProps.getUsername());
-                resource.setProperty("password", logDbConnectionProps.getPassword());
-                resource.setProperty("url", logDbConnectionProps.getUrl());
-
-                context.getNamingResources().addResource(resource);
-            }
-        };
-    }
-
-    @Bean(destroyMethod = "")
-    public DataSource jndiDataSource() throws IllegalArgumentException, NamingException {
-        JndiObjectFactoryBean bean = new JndiObjectFactoryBean();
-
-        bean.setJndiName("java:/comp/env/" + logDbConnectionProps.getJndiName());
-        bean.setProxyInterface(DataSource.class);
-        bean.afterPropertiesSet();
-
-        return (DataSource) bean.getObject();
-    }
-
-    @Bean
-    public EntityManagerFactory entityManagerFactory() throws IllegalArgumentException, NamingException {
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-
-        vendorAdapter.setDatabase(Database.H2);
-        vendorAdapter.setShowSql(true);
-        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-        factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("ru.training.bm.domain");
-        factory.setDataSource(jndiDataSource());
-        factory.afterPropertiesSet();
-
-        return factory.getObject();
-    }
-
-    @Bean
-    public PlatformTransactionManager transactionManager() throws IllegalArgumentException, NamingException {
-        JpaTransactionManager txManager = new JpaTransactionManager();
-        txManager.setEntityManagerFactory(entityManagerFactory());
-
-        return txManager;
-    }
-
-*/
-    @Bean
+    @Bean(name = "logDataSource")
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setDriverClassName(logDbConnectionProps.getDriverClassName());
-        dataSource.setUrl(logDbConnectionProps.getUrl());
-        dataSource.setUsername(logDbConnectionProps.getUsername());
-        dataSource.setPassword(logDbConnectionProps.getPassword());
+        dataSource.setDriverClassName(logDataSourceProperties.getDriverClassName());
+        dataSource.setUrl(logDataSourceProperties.getUrl());
+        dataSource.setUsername(logDataSourceProperties.getUsername());
+        dataSource.setPassword(logDataSourceProperties.getPassword());
+        dataSource.setSchema("LOG");
 
         return dataSource;
+    }
+
+    @Bean(name = "logEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder, @Qualifier("logDataSource") DataSource dataSource) {
+        return builder
+                .dataSource(dataSource)
+                .packages("ru.training.bm.domain")
+                .persistenceUnit("log")
+                .build();
+    }
+
+    @Bean(name = "logTransactionManager")
+    public PlatformTransactionManager barTransactionManager(@Qualifier("logEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
     }
 
 }

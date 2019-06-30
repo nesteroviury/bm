@@ -13,7 +13,7 @@ import ru.training.bm.api.service.CategoryService;
 import ru.training.bm.domain.Bookmark;
 import ru.training.bm.domain.Category;
 import ru.training.bm.exception.ServiceException;
-import ru.training.bm.repository.BookmarkRepository;
+import ru.training.bm.repository.data.BookmarkRepository;
 
 import java.util.List;
 
