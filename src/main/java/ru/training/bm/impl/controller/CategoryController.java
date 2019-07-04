@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.training.bm.api.config.logging.aop.Loggable;
 import ru.training.bm.api.controller.BaseController;
 import ru.training.bm.api.json.View;
 import ru.training.bm.api.service.BookmarkService;
@@ -32,6 +33,7 @@ public class CategoryController implements BaseController<Category> {
         this.logRepository = logRepository;
     }
 
+    @Loggable
     @JsonView(View.UI.class)
     @Override
     @GetMapping(ControllerUrls.CATEGORY_GET)
@@ -39,6 +41,7 @@ public class CategoryController implements BaseController<Category> {
         return categoryService.get(id);
     }
 
+    @Loggable
     @JsonView(View.UI.class)
     @Override
     @DeleteMapping(ControllerUrls.CATEGORY_DELETE)
@@ -46,6 +49,7 @@ public class CategoryController implements BaseController<Category> {
         categoryService.delete(id);
     }
 
+    @Loggable
     @Override
     @DeleteMapping(ControllerUrls.CATEGORY_DELETE_SELECTED)
     public void delete(@RequestBody IdWrapper wrapper) {
@@ -57,6 +61,7 @@ public class CategoryController implements BaseController<Category> {
         }
     }
 
+    @Loggable
     @JsonView(View.UI.class)
     @Override
     @PostMapping(ControllerUrls.CATEGORY_CREATE)
@@ -64,6 +69,7 @@ public class CategoryController implements BaseController<Category> {
         return categoryService.create(category);
     }
 
+    @Loggable
     @JsonView(View.UI.class)
     @Override
     @PutMapping(ControllerUrls.CATEGORY_UPDATE)
@@ -71,6 +77,7 @@ public class CategoryController implements BaseController<Category> {
         return categoryService.update(category);
     }
 
+    @Loggable
     @JsonView(View.UI.class)
     @Override
     @GetMapping(ControllerUrls.CATEGORY_GET_ALL)

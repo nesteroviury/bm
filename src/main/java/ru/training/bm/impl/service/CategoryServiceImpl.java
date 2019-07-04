@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.training.bm.api.config.logging.aop.Loggable;
 import ru.training.bm.api.service.CategoryService;
 import ru.training.bm.domain.Category;
 import ru.training.bm.exception.ServiceException;
@@ -24,6 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
+    @Loggable
     @Override
     @Transactional
     public Category create(Category category) throws ServiceException {
@@ -38,6 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.saveAndFlush(category);
     }
 
+    @Loggable
     @Override
     @Transactional
     public Category update(Category category) throws ServiceException {
@@ -57,23 +60,27 @@ public class CategoryServiceImpl implements CategoryService {
                 .get();
     }
 
+    @Loggable
     @Override
     @Transactional
     public void delete(Category entity) throws ServiceException {
 
     }
 
+    @Loggable
     @Override
     @Transactional
     public void delete(List<Long> entityIdList) throws ServiceException {
         categoryRepository.deleteAllByIdIn(entityIdList);
     }
 
+    @Loggable
     @Override
     public void truncate() throws ServiceException {
         categoryRepository.deleteAllInBatch();
     }
 
+    @Loggable
     @Override
     @Transactional
     public Category get(Long id) throws ServiceException {
@@ -95,6 +102,7 @@ public class CategoryServiceImpl implements CategoryService {
         return category;
     }
 
+    @Loggable
     @Override
     @Transactional
     public Page<Category> get(Integer page, Integer size) throws ServiceException {
@@ -104,6 +112,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findAll(pageable);
     }
 
+    @Loggable
     @Override
     @Transactional
     public void delete(Long categoryId) throws ServiceException {

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.training.bm.api.config.logging.aop.Loggable;
 import ru.training.bm.api.service.BookmarkService;
 import ru.training.bm.api.service.CategoryService;
 import ru.training.bm.domain.Bookmark;
@@ -29,12 +30,14 @@ public class BookmarkServiceImpl implements BookmarkService {
         this.categoryService = categoryService;
     }
 
+    @Loggable
     @Override
     @Transactional
     public Bookmark create(Bookmark bookmark) throws ServiceException {
         return bookmarkRepository.saveAndFlush(bookmark);
     }
 
+    @Loggable
     @Override
     @Transactional
     public Bookmark update(Bookmark bookmark) throws ServiceException {
@@ -47,12 +50,14 @@ public class BookmarkServiceImpl implements BookmarkService {
                 .get();
     }
 
+    @Loggable
     @Override
     @Transactional
     public void delete(Bookmark bookmark) throws ServiceException {
         bookmarkRepository.delete(bookmark);
     }
 
+    @Loggable
     @Override
     @Transactional
     public Bookmark get(Long id) throws ServiceException {
@@ -61,6 +66,7 @@ public class BookmarkServiceImpl implements BookmarkService {
                 .orElseThrow(() -> new ServiceException("Bookmark with id=" + id + " not found"));
     }
 
+    @Loggable
     @Override
     @Transactional
     public Page<Bookmark> get(Integer page, Integer size) throws ServiceException {
@@ -70,6 +76,7 @@ public class BookmarkServiceImpl implements BookmarkService {
         return bookmarkRepository.findAll(pageable);
     }
 
+    @Loggable
     @Override
     @Transactional
     public void delete(Long categoryId) throws ServiceException {
@@ -77,12 +84,14 @@ public class BookmarkServiceImpl implements BookmarkService {
         bookmarkRepository.deleteAllByCategory(category);
     }
 
+    @Loggable
     @Override
     @Transactional
     public void delete(List<Long> bookmarkIdList) throws ServiceException {
         bookmarkRepository.deleteAllByIdIn(bookmarkIdList);
     }
 
+    @Loggable
     @Override
     public void truncate() throws ServiceException {
         bookmarkRepository.deleteAllInBatch();

@@ -12,13 +12,18 @@ import org.springframework.stereotype.Component;
 public class LoggingAspect {
 
     private final Logger LOGGER = LogManager.getLogger("JDBC_Logger");
-    private final StringBuilder messageBuilder = new StringBuilder("Method arguments{");
+    private final StringBuilder messageBuilder = new StringBuilder();
     private final String DELIMITER = ", ";
     private final String ARGNAME_ARGVALUE_DELIMITER = "=";
+    private final String SEMICOLON = ": ";
 
 
     @Before("@annotation(Loggable)")
     public void beforeAdvice(JoinPoint joinPoint) {
+        messageBuilder.append(joinPoint.getSignature())
+                .append(SEMICOLON)
+                .append("Method arguments{");
+
         Object[] args = joinPoint.getArgs();
 
         for (int i = 0; i < args.length; i++) {
@@ -33,6 +38,8 @@ public class LoggingAspect {
         messageBuilder.append("}");
 
         LOGGER.debug(messageBuilder.toString());
+        
+        messageBuilder.delete(0, messageBuilder.length());
     }
 
 }

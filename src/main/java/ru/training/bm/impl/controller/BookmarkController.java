@@ -3,6 +3,7 @@ package ru.training.bm.impl.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+import ru.training.bm.api.config.logging.aop.Loggable;
 import ru.training.bm.api.controller.BaseController;
 import ru.training.bm.api.service.BookmarkService;
 import ru.training.bm.domain.Bookmark;
@@ -19,24 +20,28 @@ public class BookmarkController implements BaseController<Bookmark> {
         this.bookmarkService = bookmarkService;
     }
 
+    @Loggable
     @Override
     @GetMapping(ControllerUrls.BOOKMARK_GET)
     public Bookmark get(@PathVariable Long id) {
         return bookmarkService.get(id);
     }
 
+    @Loggable
     @Override
     @GetMapping(ControllerUrls.BOOKMARK_GET_ALL)
     public Page<Bookmark> get(Integer page, Integer size) {
         return bookmarkService.get(page, size);
     }
 
+    @Loggable
     @Override
     @DeleteMapping(ControllerUrls.BOOKMARK_DELETE_ALL)
     public void delete(Long categoryId) {
         bookmarkService.delete(categoryId);
     }
 
+    @Loggable
     @Override
     @DeleteMapping(ControllerUrls.BOOKMARK_DELETE_SELECTED)
     public void delete(IdWrapper wrapper) {
@@ -47,12 +52,14 @@ public class BookmarkController implements BaseController<Bookmark> {
         }
     }
 
+    @Loggable
     @Override
     @PostMapping(ControllerUrls.BOOKMARK_CREATE)
     public Bookmark create(Bookmark bookmark) {
         return bookmarkService.create(bookmark);
     }
 
+    @Loggable
     @Override
     @PutMapping(ControllerUrls.BOOKMARK_UPDATE)
     public Bookmark update(Bookmark bookmark) {
