@@ -1,8 +1,6 @@
 package ru.training.bm.impl.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -38,12 +36,6 @@ public class CategoryController implements BaseController<Category> {
     @Override
     @GetMapping(ControllerUrls.CATEGORY_GET)
     public Category get(@PathVariable Long id) {
-        Logger logger = LogManager.getLogger("JDBC_Logger");
-        logger.error("error");
-        logger.info("info");
-        logger.debug("debug");
-        logger.trace("debug");
-        logger.warn("warn");
         return categoryService.get(id);
     }
 
